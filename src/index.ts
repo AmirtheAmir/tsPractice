@@ -21,6 +21,59 @@ function caculateTax(income: number, taxYear = 2022): number {
 }
 console.log(caculateTax(10_000, 2021));
 
-let employee: { readonly id: number; name?: string } = { id: 1 };
-employee.name = "Amir";
+type Employee = {
+  readonly id: number;
+  name?: string;
+  retire: (date: Date) => void;
+};
+let employee: Employee = {
+  id: 1,
+  name: "Amir",
+  retire: (date: Date) => {
+    console.log(date);
+  },
+};
 
+function kgToLbs(weight: number | string): number {
+  if (typeof weight === "number") return weight * 2.2;
+  else return parseFloat(weight) * 2.2;
+}
+kgToLbs(10);
+kgToLbs("10kg");
+
+// Intersection Types in action
+type Draggable = {
+  drag: () => void;
+};
+type Resizable = {
+  resize: () => void;
+};
+type UIWidget = Draggable & Resizable;
+let textBox: UIWidget = {
+  drag: () => {},
+  resize: () => {},
+};
+
+// Literal Types
+type Quantity = 50 | 100;
+let quantity: Quantity = 100;
+
+function greet(name: string | null | undefined) {
+  if (name) {
+    console.log(name.toUpperCase());
+  } else {
+    console.log("Hola!");
+  }
+}
+greet(null);
+
+type customer = {
+  birthday: Date;
+};
+function getCustomer(id: number): customer | null | undefined {
+  return id === 0 ? null : { birthday: new Date() };
+}
+let getCustomer1 = getCustomer(0);
+if (getCustomer1 !== null && getCustomer1 !== undefined) {
+  console.log(getCustomer1.birthday);
+}
